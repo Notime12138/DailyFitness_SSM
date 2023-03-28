@@ -22,6 +22,14 @@ public class PmsBrandServiceImpl implements PmsBrandService {
     @Autowired
     private PmsBrandMapper pmsBrandMapper;
 
+//    Springboot 3.x中使用创建了SqlSessionFactory的Mapper，失败。
+//    private final PmsBrandMapper pmsBrandMapper;
+//
+//    @Autowired
+//    public PmsBrandServiceImpl(PmsBrandMapper pmsBrandMapper) {
+//        this.pmsBrandMapper = pmsBrandMapper;
+//    }
+
     @Override
     public List<PmsBrand> listAllBrand() {
         return pmsBrandMapper.selectByExample(new PmsBrandExample());

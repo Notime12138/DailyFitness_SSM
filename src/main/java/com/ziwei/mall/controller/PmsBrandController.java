@@ -29,7 +29,7 @@ public class PmsBrandController {
     // LOGGER 作用：
     private static final Logger LOGGER = LoggerFactory.getLogger(PmsBrandController.class);
 
-    @RequestMapping(value = "listALL", method = RequestMethod.GET)
+    @RequestMapping(value = "/listALL", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<PmsBrand>> getBrandList() {
         return CommonResult.success(pmsBrandService.listAllBrand());
