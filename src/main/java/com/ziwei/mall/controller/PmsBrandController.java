@@ -4,6 +4,9 @@ import com.ziwei.mall.common.api.CommonPage;
 import com.ziwei.mall.common.api.CommonResult;
 import com.ziwei.mall.mbg.model.PmsBrand;
 import com.ziwei.mall.service.PmsBrandService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +23,21 @@ import java.util.List;
  * Brand Controller
  */
 
-@Controller
+@Api(tags = "PmsBrandController")
+@RestController
 @RequestMapping("/brand")
 public class PmsBrandController {
     @Autowired
     private PmsBrandService pmsBrandService;
 
-    // LOGGER 作用：
+    /**
+     * LOGGER.debug方法会将指定的日志信息输出到日志系统中。
+     * 当应用程序开发完成并进入生产环境时，应将日志级别设置为INFO或以上，以便减少日志输出对系统性能的影响。
+     * 避免在生产环境中输出敏感信息，如密码、密钥等，建议在日志输出中使用占位符或敏感信息脱敏等技术，以保证应用程序的安全性。
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(PmsBrandController.class);
 
+    @ApiOperation(value = "获取品牌列表", notes = "获取所有品牌的列表")
     @RequestMapping(value = "/listALL", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<PmsBrand>> getBrandList() {
@@ -36,6 +45,7 @@ public class PmsBrandController {
     }
 
 
+    @ApiOperation("添加品牌")
     @PostMapping(value = "/create")
     @ResponseBody
     public CommonResult createBrand(@RequestBody PmsBrand pmsBrand) {
@@ -51,6 +61,7 @@ public class PmsBrandController {
         return commonResult;
     }
 
+    @ApiOperation(value = "更新品牌", notes = "根据id更新品牌信息")
     @PostMapping(value = "/update/{id}")
     @ResponseBody
     public CommonResult updateBrand(@PathVariable("id") Long id, @RequestBody PmsBrand pmsBrand, BindingResult bindingResult) {
@@ -66,6 +77,7 @@ public class PmsBrandController {
         return commonResult;
     }
 
+    @ApiOperation(value = "删除品牌", notes = "根据id删除品牌")
     @DeleteMapping(value = "/delete/{id}")
     @ResponseBody
     public CommonResult deleteBrand(@PathVariable("id") Long id) {
@@ -79,6 +91,7 @@ public class PmsBrandController {
         }
     }
 
+    @ApiOperation(value = "查询品牌列表", notes = "分页查询")
     @GetMapping(value = "/list")
     @ResponseBody
     public CommonResult<CommonPage<PmsBrand>> listBrand(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,@RequestParam(value = "pageSize",defaultValue = "3")Integer pageSize) {
@@ -86,6 +99,7 @@ public class PmsBrandController {
         return CommonResult.success(CommonPage.restPage(brandList));
     }
 
+    @ApiOperation(value = "查询指定品牌",notes = "获取指定id的品牌信息")
     @GetMapping(value = "/{id}")
     @ResponseBody
     public CommonResult<PmsBrand> brand(@PathVariable("id") Long id) {
