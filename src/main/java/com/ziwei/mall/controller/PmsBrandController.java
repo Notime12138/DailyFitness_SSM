@@ -23,7 +23,7 @@ import java.util.List;
  * Brand Controller
  */
 
-@Api(tags = "PmsBrandController")
+@Api(tags = "品牌管理")
 @RestController
 @RequestMapping("/brand")
 public class PmsBrandController {

@@ -9,8 +9,28 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  redis:
+    host: localhost # Redis Server address
+    database: 0 # DB index
+    port: 6379 # port
+    password:  # connection password
+    jedis:
+      pool:
+        max-active: 8 # 连接池最大数量
+        max-wait: -1ms # 连接池最大阻塞等待时间（负值无限制）
+        max-idle: 8 # 最大空闲连接
+        min-idle: 0 # 最小空闲连接
+    timeout: 3000ms # 连接超时时间
 
 mybatis:
   mapper-locations:
     - classpath:mapper/*.xml
     - classpath*:com/**/mapper/*.xml
+
+# 自定义redis key
+redis:
+  key:
+    prefix:
+      authCode: "portal:authCode:"
+    expire:
+      authCode: "120"  #验证码超时时间
