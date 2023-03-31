@@ -5,6 +5,8 @@
 * SpringBoot 2.7.10
 * Mybatis pageHelper 1.4.6
 * Swagger 3.0.0
+* Hutool 常用工具类库
+* SpringSecurity
 
 ### 项目地址
 * [Github](https://github.com/Notime12138/mall_springboot)
@@ -45,4 +47,11 @@ Mybatis 找不到 'SqlSessionFactory' 或 'SqlSessionTemplate' ，需要在Mybat
 Swagger 2.x 版本对SpringBoot 2.5.x 以上版本不支持，将MVC匹配模式更改至ant_path_matcher后也未能解决。
 方案1：降低SpringBoot版本
 方案2：将Swagger升级至 3.x ，并额外配置SwaggerConfig文件
+```
+```text
+ApiKey是SecurityScheme的子类但是无法转换
+```
+* Bean 循环依赖
+```text
+securityConfig和umsAdminServiceImpl循环依赖
 ```

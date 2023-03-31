@@ -9,13 +9,14 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.oas.annotations.EnableOpenApi;
-import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,7 +54,10 @@ public class Swagger3Config {
 //                  none()：不扫描任何 API 接口。
 //                  ant(String antPattern)：按照 Ant 风格的路径表达式匹配 API 接口。
 //                  regex(String regex)：按照正则表达式匹配 API 接口。
-                .build();
+                .build()
+                // 登录认证
+                .securitySchemes(securitySchemes())
+                .securityContexts(securityContexts());
     }
 
     public ApiInfo apiInfo() {
@@ -63,6 +67,40 @@ public class Swagger3Config {
                 .version("1.0")
                 .build();
     }
+
+    private List<SecurityScheme> securitySchemes() {
+        // 设置请求头信息
+        List<SecurityScheme> res = new ArrayList<>();
+        res.add(new ApiKey("Authorization", "Authorization", "header"));
+        // 在Swagger 3中，securitySchemes配置只接受SecurityScheme类型的安全方案，因此当你试图使用ApiKey时，就会提示类型不兼容的错误。
+        res = res.stream().map(apiKey -> (SecurityScheme) apiKey).collect(Collectors.toList());
+        return res;
+    }
+
+    private List<SecurityContext> securityContexts() {
+        // 设置需要登录的路径
+        List<SecurityContext> result = new ArrayList<>();
+        result.add(getContextByPath("/brand/.*"));
+        return result;
+    }
+
+    private SecurityContext getContextByPath(String pathRegex) {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+//                .forPaths(PathSelectors.regex(pathRegex))
+                .operationSelector(operationContext -> operationContext.requestMappingPattern().matches("pathRegex"))
+                .build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        List<SecurityReference> res = new ArrayList<>();
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        res.add(new SecurityReference("Authorization", authorizationScopes));
+        return res;
+    }
+
 
     //Swagger 3
     @Bean
