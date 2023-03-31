@@ -18,7 +18,6 @@ import java.io.IOException;
  * 当访问接口没有权限的时候，返回json
  */
 
-@Component
 public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request,

@@ -3,24 +3,14 @@ package com.ziwei.mall.config;
 import com.ziwei.mall.component.JwtAuthenticationTokenFilter;
 import com.ziwei.mall.component.RestfulAccessDeniedHandler;
 import com.ziwei.mall.component.RestfulAuthenticationEntryPoint;
-import com.ziwei.mall.dto.AdminUserDetails;
-import com.ziwei.mall.mbg.model.UmsAdmin;
-import com.ziwei.mall.mbg.model.UmsPermission;
-import com.ziwei.mall.service.UmsAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.List;
@@ -36,17 +26,18 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
     @Autowired
-    private UmsAdminService umsAdminService;
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
     @Autowired
     private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
     @Autowired
     private RestfulAuthenticationEntryPoint restfulAuthenticationEntryPoint;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
+
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
                 .csrf()// CSRF令牌是一段随机生成的字符串，与用户会话相关联，每个请求都需要携带此令牌，服务器验证此令牌才会执行请求。
                 .disable()// 不需要通过登录验证
                 .sessionManagement()// 基于token，不使用session
@@ -58,60 +49,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/favicon.ico",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js",
-                        "/swagger-resources/**",
-                        "/api-docs/**"
-                ) // 不需要通过验证的文件
+                        "/**/*.js"
+                )// 不需要通过验证的文件
+                .permitAll()
+                .antMatchers("/swagger-resources/**", "/swagger-ui/", "/**/v2/api-docs")
                 .permitAll()
                 .antMatchers("/admin/login", "/admin/register")
-                .permitAll()
+                .permitAll() // 登录和注册不需要权限
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll()
+//                .antMatchers("/**")
+//                .permitAll()// 测试全通过
                 .anyRequest()
                 .authenticated();
         // 禁用缓存
-        http.headers().cacheControl();
+        httpSecurity.headers().cacheControl();
         // 添加JWT filter
-        http.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         // 添加自定义未授权和未登录结果的返回（json）
-        http.exceptionHandling()
+        httpSecurity.exceptionHandling()
                 .accessDeniedHandler(restfulAccessDeniedHandler)
                 .authenticationEntryPoint(restfulAuthenticationEntryPoint);
+        return httpSecurity.build();
     }
 
-    @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
-        return new JwtAuthenticationTokenFilter();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService())
-                .passwordEncoder(passwordEncoder());
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Override
-    @Bean
-    public UserDetailsService userDetailsService() {
-        // 获取登录用户信息
-        return username -> {
-            UmsAdmin umsAdmin = umsAdminService.getAdminByUserName(username);
-            if (umsAdmin != null) {
-                List<UmsPermission> permissionList = umsAdminService.getPermissionList(umsAdmin.getId());
-                return new AdminUserDetails(umsAdmin, permissionList);
-            }
-            throw new UsernameNotFoundException("USER DOES NOT EXIST");
-        };
-    }
-
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 }

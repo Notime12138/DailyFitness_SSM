@@ -24,7 +24,6 @@ import java.util.Map;
  * 签名（Signature）：使用Base64Url编码的Header和Payload加上一个秘钥，使用指定算法生成的签名。
  */
 
-@Component
 public class JwtTokenUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
     private static final String CLAIM_KEY_USERNAME = "sub";

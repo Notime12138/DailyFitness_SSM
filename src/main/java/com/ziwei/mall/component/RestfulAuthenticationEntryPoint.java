@@ -18,7 +18,6 @@ import java.io.IOException;
  * 未登录或token失效时，返回json
  */
 
-@Component
 public class RestfulAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {

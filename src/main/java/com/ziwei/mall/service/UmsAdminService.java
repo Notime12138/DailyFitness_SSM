@@ -2,6 +2,7 @@ package com.ziwei.mall.service;
 
 import com.ziwei.mall.mbg.model.UmsAdmin;
 import com.ziwei.mall.mbg.model.UmsPermission;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
@@ -28,6 +29,13 @@ public interface UmsAdminService {
      * @return 生成的JWT的token
      */
     String login(String userName, String password);
+
+    /**
+     * 加载用户信息
+     * @return
+     */
+    UserDetails loadUserByUsername(String userName);
+
 
     /**
      * 获取用户的权限

@@ -1,10 +1,6 @@
 package com.ziwei.mall.config;
 
-import com.ziwei.mall.mbg.mapper.PmsBrandMapper;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -16,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@MapperScan("com.ziwei.mall.mbg.mapper")
+@MapperScan({"com.ziwei.mall.mbg.mapper", "com.ziwei.mall.dao"})
 public class MybatisConfig {
 
 //    @Bean

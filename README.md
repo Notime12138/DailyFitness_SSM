@@ -16,7 +16,7 @@
 * [x] SpringBoot + Mybatis（pageHelper和generator）基本框架配置
 * [x] 整合Swagger 3.x 实现在线API文档
 * [x] 整合Redis实现缓存功能
-* [ ] 整合SpringSecurity
+* [x] 整合SpringSecurity
 * [ ] JWT实现认证和授权
 * [ ] 整合SpringTask实现定时任务
 * [ ] 整合Elasticsearch实现商品搜索
@@ -48,10 +48,17 @@ Swagger 2.x 版本对SpringBoot 2.5.x 以上版本不支持，将MVC匹配模式
 方案1：降低SpringBoot版本
 方案2：将Swagger升级至 3.x ，并额外配置SwaggerConfig文件
 ```
+* Swagger 兼容性
 ```text
 ApiKey是SecurityScheme的子类但是无法转换
+原因：在Swagger 3中，securitySchemes配置只接受SecurityScheme类型的安全方案，因此当你试图使用ApiKey时，就会提示类型不兼容的错误。
+
+解决方案：创建ApiKey对象后，使用stream将ApiKey转换成SecurityScheme后再返回。
 ```
 * Bean 循环依赖
 ```text
 securityConfig和umsAdminServiceImpl循环依赖
+方案1： @Lazy懒加载，在被使用到的时候再去加载
+方案2： 拆分SecurityConfig这个configuration，将多余的bean转移到其他的configuration文件中
+方案3： 允许循环依赖（不推荐）
 ```
