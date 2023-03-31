@@ -17,14 +17,14 @@
 * [x] 整合Swagger 3.x 实现在线API文档
 * [x] 整合Redis实现缓存功能
 * [x] 整合SpringSecurity
-* [ ] JWT实现认证和授权
+* [x] JWT实现认证和授权
 * [ ] 整合SpringTask实现定时任务
 * [ ] 整合Elasticsearch实现商品搜索
 * [ ] 整合MongoDB实现文档操作
 * [ ] 整合RabbitMQ实现延迟消息
 * [ ] 整合OSS实现文件上传
 
-
+### 尝试新功能
 * [ ] 尝试添加扫码登录功能
 * [ ] 添加邮箱注册并实现发送验证码
 * [ ] 将邮箱账户与手机账户关联

@@ -21,6 +21,19 @@ spring:
         max-idle: 8 # 最大空闲连接
         min-idle: 0 # 最小空闲连接
     timeout: 3000ms # 连接超时时间
+  # 邮件组件
+  mail:
+    host: smtp.office365.com
+    port: 587
+    username: wilson_gong@outlook.com
+    password: 2325bdrzdbzbyf
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    default-encoding: UTF-8  # 邮件编码格式
 
 mybatis:
   mapper-locations:
