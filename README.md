@@ -17,8 +17,8 @@
 * [x] 整合Swagger 3.x 实现在线API文档
 * [x] 整合Redis实现缓存功能
 * [x] 整合SpringSecurity
-* [ ] JWT实现认证和授权
-* [ ] 整合SpringTask实现定时任务
+* [x] JWT实现认证和授权
+* [x] 整合SpringTask实现定时任务
 * [ ] 整合Elasticsearch实现商品搜索
 * [ ] 整合MongoDB实现文档操作
 * [ ] 整合RabbitMQ实现延迟消息
