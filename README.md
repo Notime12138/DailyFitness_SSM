@@ -1,16 +1,25 @@
 ## 模仿Mall的学习项目
 
-### 简介
+### 简介：
+学习Github开源项目[mall-tiny](https://github.com/macrozheng/mall-learning) ，并根据自己的理解对原有功能进行学习、理解和完善，并且尝试添加一些功能，以完成学习目的。
+
+### 技术栈：
 目前涵盖：
 * SpringBoot 2.7.10
-* Mybatis pageHelper 1.4.6
+* Mybatis PageHelper 1.4.6
+* Mybatis Generator
+* Redis
 * Swagger 3.0.0
 * Hutool 常用工具类库
-* SpringSecurity
+* SpringSecurity 和 JWT认证
+* SpringTask
+* RabbitMQ
+* Lombok
 
 ### 项目地址
 * [Github](https://github.com/Notime12138/mall_springboot)
 * [Swagger](http://localhost:8080/swagger-ui/index.html)
+* [RabbitMQ](http://localhost:15672/)
 
 ### 学习进度
 * [x] SpringBoot + Mybatis（pageHelper和generator）基本框架配置
@@ -21,15 +30,27 @@
 * [x] 整合SpringTask实现定时任务
 * [ ] 整合Elasticsearch实现商品搜索
 * [ ] 整合MongoDB实现文档操作
-* [ ] 整合RabbitMQ实现延迟消息
+* [x] 整合RabbitMQ实现延迟消息
 * [ ] 整合OSS实现文件上传
 
-
+### 自定义功能
 * [ ] 尝试添加扫码登录功能
 * [ ] 添加邮箱注册并实现发送验证码
 * [ ] 将邮箱账户与手机账户关联
 * [ ] 
 
+### 中间件服务启动
+```text
+启动Redis服务器
+```
+```text
+启动RabbitMQ服务:
+rabbitmq-service.bat start
+```
+```text
+启动RabbitMQ服务:
+rabbitmq-service.bat start
+```
 
 ### 遇到的困难
 * Maven 依赖爆红
