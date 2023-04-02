@@ -29,6 +29,10 @@ spring:
     username: notime12138
     password: qwer123456
     publisher-returns: true #对异步消息需要回调
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
 
 mybatis:
   mapper-locations:

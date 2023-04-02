@@ -24,7 +24,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
 
     @Override
     public CommonResult generateOrder(OrderParam orderParam) {
-        // 下单
+        // TODO:下单
         LOGGER.info("订单生成成功");
         // 下单完成后生成延迟消息和OrderId，如果用户没有及时付款，就根据OrderId取消订单
         sendDelayMessageCancelOrder(OrderIdGenerator.generateOrderId(orderParam));
@@ -33,6 +33,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
 
     @Override
     public void cancelOrder(Long orderId) {
+        // TODO: 取消订单
         LOGGER.info("由于一些原因，订单:{}已被取消", orderId);
     }
 

@@ -21,7 +21,7 @@ public class OrderTimeOutCancelTask {
      */
     @Scheduled(cron = "0 0/30 * ? * ?")
     private void cancelTimeOutOrder() {
-        // 取消订单
+        // TODO: 取消订单
         LOGGER.info("订单超时未支付已被取消");
     }
 }

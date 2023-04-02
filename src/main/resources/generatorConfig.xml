@@ -28,7 +28,7 @@
                         userId="${jdbc.userId}"
                         password="${jdbc.password}">
             <!--解决mysql驱动升级到8.0后不生成指定数据库代码的问题-->
-            <property name="nullCatalogMeansCurrent" value="true" />
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
         <!--指定生成model的路径-->
         <javaModelGenerator targetPackage="com.ziwei.mall.mbg.model" targetProject="src\main\java"/>
@@ -60,6 +60,16 @@
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
         <table tableName="ums_admin_permission_relation">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <!--ESProduct-->
+        <table tableName="pms_product">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="pms_product_attribute">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="pms_product_attribute_value">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
     </context>

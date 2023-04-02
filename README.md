@@ -19,6 +19,8 @@
 ### 项目地址
 * [Github](https://github.com/Notime12138/mall_springboot)
 * [Swagger](http://localhost:8080/swagger-ui/index.html)
+* [ElasticSearch](http://localhost:9200/)
+* [Kibana](http://localhost:5601/)
 * [RabbitMQ](http://localhost:15672/)
 
 ### 学习进度
@@ -28,10 +30,12 @@
 * [x] 整合SpringSecurity
 * [x] JWT实现认证和授权
 * [x] 整合SpringTask实现定时任务
+* [ ] 配置Spring Data Elasticsearch
 * [ ] 整合Elasticsearch实现商品搜索
 * [ ] 整合MongoDB实现文档操作
 * [x] 整合RabbitMQ实现延迟消息
 * [ ] 整合OSS实现文件上传
+* [ ] 完善下单，去掉订单功能
 
 ### 自定义功能
 * [ ] 尝试添加扫码登录功能
