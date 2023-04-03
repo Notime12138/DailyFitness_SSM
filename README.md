@@ -31,8 +31,8 @@
 * [x] 整合SpringSecurity
 * [x] JWT实现认证和授权
 * [x] 整合SpringTask实现定时任务
-* [ ] 配置Spring Data Elasticsearch
-* [ ] 整合Elasticsearch实现商品搜索
+* [x] 配置Spring Data Elasticsearch
+* [x] 整合Elasticsearch实现商品搜索
 * [ ] 整合MongoDB实现文档操作
 * [x] 整合RabbitMQ实现延迟消息
 * [ ] 整合OSS实现文件上传
@@ -56,6 +56,26 @@ rabbitmq-service.bat start
 启动RabbitMQ服务:
 rabbitmq-service.bat start
 ```
+```text
+启动Elasticearch和kibana
+```
+
+### 参考文档
+* [ChatGPT](https://chat.openai.com/chat)
+* [Mybatis](https://mybatis.org/mybatis-3/zh/index.html)
+* [Mybatis Generator](http://mybatis.org/generator/)
+* [Mybatis PageHelper](https://pagehelper.github.io/docs/)
+* [Swagger](https://swagger.io/docs/)
+* [Redis](https://redis.io/docs/)
+* [Hutool](https://hutool.cn/docs/#/)
+* [Spring Security](https://docs.spring.io/spring-security/reference/index.html)
+* [JWT Token](https://jwt.io/introduction)
+* [Spring Task](https://spring.io/guides/gs/scheduling-tasks/)
+* [Spring Data ES](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/)
+* [Elasticsearch](https://www.elastic.co/guide/en/welcome-to-elastic/current/getting-started-general-purpose.html)
+* [Kibana](https://www.elastic.co/guide/en/kibana/current/get-started.html)
+* [RabbitMQ](https://www.rabbitmq.com/getstarted.html)
+* [MongoDB](https://www.mongodb.com/docs/guides/atlas/account/)
 
 ### 遇到的困难
 * Maven 依赖爆红
@@ -87,4 +107,11 @@ securityConfig和umsAdminServiceImpl循环依赖
 方案1： @Lazy懒加载，在被使用到的时候再去加载
 方案2： 拆分SecurityConfig这个configuration，将多余的bean转移到其他的configuration文件中
 方案3： 允许循环依赖（不推荐）
+```
+* Elasticsearch 无法解析响应正文
+```text
+Elasticsearch Unable to parse response body
+api 返回code 500，但使用kibana查询时有结果
+方案1：降低Elasticsearch版本到7.17.4
+方案2：捕捉Spring data Elasticsearch的getAll方法的异常并抛出。
 ```
