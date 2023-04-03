@@ -35,21 +35,29 @@ public class EsProductServiceImpl implements EsProductService {
     @Override
     public int importAll() {
         List<EsProduct> esProductList = esProductDao.getAllEsProductList(null);
-        Iterable<EsProduct> esProductIterable = esProductRepository.saveAll(esProductList);
-        Iterator<EsProduct> iterator = esProductIterable.iterator();
-        int num = 0;
-        while (iterator.hasNext()) {
-            num++;
-            iterator.next();
+        try {
+            esProductRepository.saveAll(esProductList);
+        } catch (Exception e) {
+            if (!e.getMessage().contains("OK")) {
+                LOGGER.info("商品录入失败");
+                throw e;
+            }
+            LOGGER.info("商品录入成功");
         }
-        LOGGER.info("成功录入了{}个商品",num);
-        return num;
+//        Iterator<EsProduct> iterator = esProductIterable.iterator();
+//        int num = 0;
+//        while (iterator.hasNext()) {
+//            num++;
+//            iterator.next();
+//        }
+//        LOGGER.info("成功录入了{}个商品", num);
+        return esProductList.size();
     }
 
     @Override
     public void delete(Long id) {
         esProductRepository.deleteById(id);
-        LOGGER.info("成功删除了商品{}",id);
+        LOGGER.info("成功删除了商品{}", id);
     }
 
     @Override
@@ -60,7 +68,7 @@ public class EsProductServiceImpl implements EsProductService {
             EsProduct esProduct = esProductList.get(0);
             res = esProductRepository.save(esProduct);
         }
-        LOGGER.info("成功创建了商品{}",id);
+        LOGGER.info("成功创建了商品{}", id);
         return res;
     }
 
@@ -82,7 +90,7 @@ public class EsProductServiceImpl implements EsProductService {
 
     @Override
     public Page<EsProduct> search(String keyword, Integer pageNum, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNum,pageSize);
+        Pageable pageable = PageRequest.of(pageNum, pageSize);
         LOGGER.info("正在搜索...");
         return esProductRepository.findByNameOrSubTitleOrKeywords(keyword, keyword, keyword, pageable);
     }

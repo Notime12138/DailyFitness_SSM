@@ -13,6 +13,7 @@
 * Hutool 常用工具类库
 * SpringSecurity 和 JWT认证
 * SpringTask
+* Elasticsearch 8.7.0
 * RabbitMQ
 * Lombok
 
