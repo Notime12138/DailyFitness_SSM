@@ -14,6 +14,7 @@
 * SpringSecurity 和 JWT认证
 * SpringTask
 * Elasticsearch 8.7.0
+* MongoDB
 * RabbitMQ
 * Lombok
 
@@ -23,6 +24,7 @@
 * [ElasticSearch](http://localhost:9200/)
 * [Kibana](http://localhost:5601/)
 * [RabbitMQ](http://localhost:15672/)
+* [MongoDB](http://localhost:27017/)
 
 ### 学习进度
 * [x] SpringBoot + Mybatis（pageHelper和generator）基本框架配置
@@ -46,14 +48,10 @@
 
 ### 中间件服务启动
 ```text
-启动Redis服务器
+启动Redis服务
 ```
 ```text
-启动RabbitMQ服务:
-rabbitmq-service.bat start
-```
-```text
-启动RabbitMQ服务:
+启动RabbitMQ服务(超时取消订单):
 rabbitmq-service.bat start
 ```
 ```text
@@ -114,4 +112,8 @@ Elasticsearch Unable to parse response body
 api 返回code 500，但使用kibana查询时有结果
 方案1：降低Elasticsearch版本到7.17.4
 方案2：捕捉Spring data Elasticsearch的getAll方法的异常并抛出。
+```
+* 当前创建用户浏览记录时不会校验用户是否存在
+```text
+
 ```
