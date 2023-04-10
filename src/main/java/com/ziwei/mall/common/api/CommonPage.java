@@ -1,6 +1,8 @@
 package com.ziwei.mall.common.api;
 
 import com.github.pagehelper.PageInfo;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -11,6 +13,8 @@ import java.util.List;
  * 将PageHelper 分页后的List转化为分页信息
  */
 
+@Setter
+@Getter
 public class CommonPage<T> {
     private Integer pageNum;
     private Integer pageSize;
@@ -28,46 +32,4 @@ public class CommonPage<T> {
         res.setList(pageInfo.getList());
         return res;
     }
-
-    public Integer getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(Integer pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public Integer getTotalPage() {
-        return totalPage;
-    }
-
-    public void setTotalPage(Integer totalPage) {
-        this.totalPage = totalPage;
-    }
-
-    public Long getTotal() {
-        return total;
-    }
-
-    public void setTotal(Long total) {
-        this.total = total;
-    }
-
-    public List<T> getList() {
-        return list;
-    }
-
-    public void setList(List<T> list) {
-        this.list = list;
-    }
-
-
 }

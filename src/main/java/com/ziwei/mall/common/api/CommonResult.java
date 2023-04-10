@@ -1,5 +1,8 @@
 package com.ziwei.mall.common.api;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author Ziwei GONG
  * @date 2023/3/27
@@ -7,6 +10,8 @@ package com.ziwei.mall.common.api;
  * 通用返回对象
  */
 
+@Getter
+@Setter
 public class CommonResult<T> {
     private long code;
     private String message;
@@ -99,29 +104,5 @@ public class CommonResult<T> {
      */
     public static <T> CommonResult<T> forbidden(T data) {
         return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
-    }
-
-    public long getCode() {
-        return code;
-    }
-
-    public void setCode(long code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }

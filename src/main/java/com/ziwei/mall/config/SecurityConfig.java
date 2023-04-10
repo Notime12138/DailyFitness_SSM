@@ -56,8 +56,8 @@ public class SecurityConfig {
                 .permitAll() // 登录和注册不需要权限
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll()
-                .antMatchers("/**")
-                .permitAll()// 测试全通过
+//                .antMatchers("/**")
+//                .permitAll()// 测试全通过
                 .anyRequest()
                 .authenticated();
         // 禁用缓存

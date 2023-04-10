@@ -35,10 +35,11 @@
 * [x] 整合SpringTask实现定时任务
 * [x] 配置Spring Data Elasticsearch
 * [x] 整合Elasticsearch实现商品搜索
-* [ ] 整合MongoDB实现文档操作
+* [x] 整合MongoDB实现文档操作
 * [x] 整合RabbitMQ实现延迟消息
+* [x] AOP切面整合接口访问日志
 * [ ] 整合OSS实现文件上传
-* [ ] 完善下单，去掉订单功能
+* [ ] 完善下单，完善订单功能
 
 ### 自定义功能
 * [ ] 尝试添加扫码登录功能
@@ -113,7 +114,8 @@ api 返回code 500，但使用kibana查询时有结果
 方案1：降低Elasticsearch版本到7.17.4
 方案2：捕捉Spring data Elasticsearch的getAll方法的异常并抛出。
 ```
-* 当前创建用户浏览记录时不会校验用户是否存在
+* 日志文件会把账号密码以及登录返回的JWT密钥明文记录
 ```text
-
+难点：判断ParamBody或ResponseBody中是否有password或者token字段，加密后再输出到日志或者不输出。
+logback和log4j，可以通过配置加密算法来加密敏感信息，例如对称加密算法（如AES）、非对称加密算法（如RSA）或哈希算法（如SHA256）等。
 ```
