@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers("/swagger-resources/**", "/swagger-ui/", "/**/v2/api-docs")
                 .permitAll()
-                .antMatchers("/admin/login", "/admin/register")
+                .antMatchers("/admin/login", "/admin/register","/email/**")
                 .permitAll() // 登录和注册不需要权限
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll()

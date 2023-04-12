@@ -28,16 +28,19 @@ public class EmailServiceImpl implements EmailService {
     private String REDIS_KEY_PREFIX_AUTH_CODE;
     @Value("${redis.key.expire.authCode}")
     private long AUTH_CODE_EXPIRE_SECONDS;
+    @Value("${spring.mail.username}")
+    private String MAIL_SENDER;
 
     @Override
     public CommonResult sendVerificationCode(String email) {
-        // 需要先验证邮箱的格式
+        // TODO:需要验证邮箱的格式
         StringBuilder stringBuilder = verificationCodeUtil.generateVerificationCode();
         // 验证码绑定邮箱，并且储存到redis
         redisService.set(REDIS_KEY_PREFIX_AUTH_CODE + email, stringBuilder.toString());
         redisService.expire(REDIS_KEY_PREFIX_AUTH_CODE + email, AUTH_CODE_EXPIRE_SECONDS);
         // 向目标邮箱发送验证码
         SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom(MAIL_SENDER);
         mailMessage.setTo(email);
         mailMessage.setSubject("Verification Code");
         mailMessage.setText("正在测试邮箱验证码功能，以下是你的验证码：\n" + stringBuilder + "\n有效时间2分钟！");
