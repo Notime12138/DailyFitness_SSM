@@ -31,6 +31,7 @@
 * [x] 整合Swagger 3.x 实现在线API文档
 * [x] 整合Redis实现缓存功能
 * [x] 整合SpringSecurity
+* [ ] 动态配置接口权限
 * [x] JWT实现认证和授权
 * [x] 整合SpringTask实现定时任务
 * [x] 配置Spring Data Elasticsearch
@@ -43,9 +44,7 @@
 
 ### 自定义功能
 * [ ] 尝试添加扫码登录功能
-* [ ] 添加邮箱注册并实现发送验证码
-* [ ] 将邮箱账户与手机账户关联
-* [ ] 
+* [x] 添加邮箱注册并实现发送验证码
 
 ### 中间件服务启动
 ```text
@@ -116,6 +115,12 @@ api 返回code 500，但使用kibana查询时有结果
 ```
 * 日志文件会把账号密码以及登录返回的JWT密钥明文记录
 ```text
-难点：判断ParamBody或ResponseBody中是否有password或者token字段，加密后再输出到日志或者不输出。
+描述：判断ParamBody或ResponseBody中是否有password或者token字段，使用占位符或敏感信息脱敏。
 logback和log4j，可以通过配置加密算法来加密敏感信息，例如对称加密算法（如AES）、非对称加密算法（如RSA）或哈希算法（如SHA256）等。
+
+引入 jasypt-spring-boot-starter jar
+配置 jasypt.encryptor.password 和 加密后的内容格式
+在方法上添加@EncryptMethod，再将@EncryptField字段加密
+使用AOP处理需要加密的字段
+参考：https://github.com/chengxy-nds/Springboot-Notebook/tree/master/springboot-jasypt
 ```
