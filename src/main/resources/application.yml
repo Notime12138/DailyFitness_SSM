@@ -37,6 +37,19 @@ spring:
       host: localhost
       port: 27017
       database: mall_history
+  # 邮件组件
+  mail:
+    host: smtp.office365.com
+    port: 587
+    username: wilson_gong@outlook.com
+    password: 2325bdrzdbzbyf
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    default-encoding: UTF-8  # 邮件编码格式
 
 mybatis:
   mapper-locations:
