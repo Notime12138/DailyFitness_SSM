@@ -17,6 +17,7 @@
 * MongoDB
 * RabbitMQ
 * Lombok
+* Jasypt
 
 ### 项目地址
 * [Github](https://github.com/Notime12138/mall_springboot)
@@ -74,6 +75,7 @@ rabbitmq-service.bat start
 * [Kibana](https://www.elastic.co/guide/en/kibana/current/get-started.html)
 * [RabbitMQ](https://www.rabbitmq.com/getstarted.html)
 * [MongoDB](https://www.mongodb.com/docs/guides/atlas/account/)
+* [Jasypet](https://github.com/ulisesbocchio/jasypt-spring-boot)
 
 ### 遇到的困难
 * Maven 依赖爆红
@@ -117,10 +119,33 @@ api 返回code 500，但使用kibana查询时有结果
 ```text
 描述：判断ParamBody或ResponseBody中是否有password或者token字段，使用占位符或敏感信息脱敏。
 logback和log4j，可以通过配置加密算法来加密敏感信息，例如对称加密算法（如AES）、非对称加密算法（如RSA）或哈希算法（如SHA256）等。
-
+```
+```text
+配置文件脱敏：
+jasypt 
 引入 jasypt-spring-boot-starter jar
 配置 jasypt.encryptor.password 和 加密后的内容格式
+```
+```text
+接口返回数据脱敏：
+1 Mybaits插件，在查询时脱敏
+
+2 整合Jackson，在序列化阶段脱敏
+
+3 基于Sharding Sphere实现数据脱敏
+配置脱敏注释和脱敏策略
+定制JSON序列化实现（通过注释在属性上来判断需要脱敏的字段）
+
+4 jasypt接口脱敏
 在方法上添加@EncryptMethod，再将@EncryptField字段加密
 使用AOP处理需要加密的字段
-参考：https://github.com/chengxy-nds/Springboot-Notebook/tree/master/springboot-jasypt
+参考：https://jianshu.com/p/8b223bd81166
 ```
+
+```text
+日志文件脱敏：
+将Spring Boot日志框架从logback切换到log4j2
+在/resource下配置log4j2.xml
+自定义PatternLayout实现数据脱敏
+```
+参考：[配置、接口返回数据、日志数据脱敏](https://juejin.cn/post/7004641512596176910)

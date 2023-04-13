@@ -1,5 +1,7 @@
 package com.ziwei.mall.controller;
 
+import com.ziwei.mall.annotation.EncryptField;
+import com.ziwei.mall.annotation.EncryptMethod;
 import com.ziwei.mall.common.api.CommonResult;
 import com.ziwei.mall.service.UmsMemberService;
 import io.swagger.annotations.Api;
@@ -26,7 +28,8 @@ public class UmsMemberController {
     @ApiOperation("获取验证码")
     @GetMapping(value = "/getAuthCode")
     @ResponseBody
-    public CommonResult getAuthCode(@ApiParam(value = "手机号") @RequestParam String telephone) {
+    @EncryptMethod
+    public CommonResult getAuthCode(@ApiParam(value = "手机号") @RequestParam @EncryptField String telephone) {
         return umsMemberService.generateAuthCode(telephone);
     }
 
