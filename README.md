@@ -31,7 +31,7 @@
 * [x] 整合Swagger 3.x 实现在线API文档
 * [x] 整合Redis实现缓存功能
 * [x] 整合SpringSecurity
-* [ ] 动态配置接口权限
+* [x] 动态配置接口权限
 * [x] JWT实现认证和授权
 * [x] 整合SpringTask实现定时任务
 * [x] 配置Spring Data Elasticsearch
@@ -123,4 +123,10 @@ logback和log4j，可以通过配置加密算法来加密敏感信息，例如�
 在方法上添加@EncryptMethod，再将@EncryptField字段加密
 使用AOP处理需要加密的字段
 参考：https://github.com/chengxy-nds/Springboot-Notebook/tree/master/springboot-jasypt
+```
+* 基于路径的动态权限控制代替基于方法的权限控制
+```text
+原本的方法：@PreAuthorize配置访问接口需要的权限，使用时从数据库获取用户的权限进行对比。
+现在的方法：使用doFilter（DynamicSecurityFilter中）方法设置白名单和需要鉴权的接口，调用AccessDecisionManager中的decide方法用于鉴权操作，而decide方法中的configAttributes参数（当前接口所需要的权限）会通过SecurityMetadataSource中的getAttributes方法来获取。
+当需要开启动态权限控制的时候，只要创建一个DynamicSecurityService对象即可。
 ```

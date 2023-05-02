@@ -1,8 +1,6 @@
 package com.ziwei.mall.config;
 
-import com.ziwei.mall.component.JwtAuthenticationTokenFilter;
-import com.ziwei.mall.component.RestfulAccessDeniedHandler;
-import com.ziwei.mall.component.RestfulAuthenticationEntryPoint;
+import com.ziwei.mall.component.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -26,15 +25,24 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Autowired
+    private IgnoreUrlsConfig ignoreUrlsConfig;
+    @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
     @Autowired
     private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
     @Autowired
     private RestfulAuthenticationEntryPoint restfulAuthenticationEntryPoint;
+    @Autowired(required = false)
+    private DynamicSecurityService dynamicSecurityService;
+    @Autowired(required = false)
+    private DynamicSecurityFilter dynamicSecurityFilter;
 
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        for (String url : ignoreUrlsConfig.getUrls()) {
+            httpSecurity.authorizeRequests().antMatchers(url).permitAll();
+        }
         httpSecurity
                 .csrf()// CSRF令牌是一段随机生成的字符串，与用户会话相关联，每个请求都需要携带此令牌，服务器验证此令牌才会执行请求。
                 .disable()// 不需要通过登录验证
@@ -52,7 +60,7 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers("/swagger-resources/**", "/swagger-ui/", "/**/v2/api-docs")
                 .permitAll()
-                .antMatchers("/admin/login", "/admin/register","/email/**")
+                .antMatchers("/admin/login", "/admin/register", "/email/**")
                 .permitAll() // 登录和注册不需要权限
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll()
@@ -68,6 +76,10 @@ public class SecurityConfig {
         httpSecurity.exceptionHandling()
                 .accessDeniedHandler(restfulAccessDeniedHandler)
                 .authenticationEntryPoint(restfulAuthenticationEntryPoint);
+//        TODO:统一httpSecurity对象
+//        if (dynamicSecurityService != null) {
+//            httpSecurity.addFilterBefore(dynamicSecurityFilter, FilterSecurityInterceptor.class);
+//        }
         return httpSecurity.build();
     }
 
