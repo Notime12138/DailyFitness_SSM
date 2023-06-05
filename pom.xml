@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ziwei</groupId>
-    <artifactId>mall</artifactId>
+    <artifactId>dailyFitness</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>mall</name>
-    <description>Mall project for Spring Boot</description>
+    <name>DailyFitness</name>
+    <description>DailyFitness, a project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
     </properties>

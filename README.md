@@ -1,7 +1,9 @@
-## 模仿Mall的学习项目
+## Daily Fitness
 
 ### 简介：
-学习Github开源项目[mall-tiny](https://github.com/macrozheng/mall-learning) ，并根据自己的理解对原有功能进行学习、理解和完善，并且尝试添加一些功能，以完成学习目的。
+使用多种数据库(MySQL,CouchDB,MongoDB)、AWS云服务、Docker、React、Swagger等，从Express.js框架迁移至SSM框架，用于查询并记录膳食营养、分析每日营养摄入、记录运动数据的Web服务。
+
+目前更多的是架构上的迁移。
 
 ### 技术栈：
 目前涵盖：
@@ -19,7 +21,7 @@
 * Lombok
 
 ### 项目地址
-* [Github](https://github.com/Notime12138/mall_springboot)
+* [Github](https://github.com/Notime12138/DailyFitness_SSM)
 * [Swagger](http://localhost:8080/swagger-ui/index.html)
 * [ElasticSearch](http://localhost:9200/)
 * [Kibana](http://localhost:5601/)
@@ -49,6 +51,9 @@
 ### 中间件服务启动
 ```text
 启动Redis服务
+@echo off
+cd D:\App\Redis
+start redis-server.exe redis.windows.conf
 ```
 ```text
 启动RabbitMQ服务(超时取消订单):
